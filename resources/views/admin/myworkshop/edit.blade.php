@@ -1,3 +1,6 @@
+
+
+
 @extends('layouts.admin.argon')
 
 @section('content')
@@ -7,44 +10,44 @@
 
     <br>
 
-      <form action="{{ route('admin.myworkshop.store') }}" method="POST" class="space-y-6">
+      <form action="{{ route('admin.myworkshop.update', $workshop->id) }}" method="POST" class="space-y-6">
         @csrf
+        @method('PUT')
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label for="judul" class="block text-sm font-medium text-gray-700 mb-1">Judul Workshop</label>
-            <input type="text" name="judul" id="judul" placeholder="masukkan judul"
+            <input type="text" name="judul" id="judul" placeholder="masukkan judul" value="{{ old('judul', $workshop->judul) }}"
               class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
           </div>
 <br>
           <div>
             <label for="pemateri" class="block text-sm font-medium text-gray-700 mb-1">Pemateri</label>
-            <input type="text" name="pemateri" id="pemateri" placeholder="masukkan pemateri"
+            <input type="text" name="pemateri" id="pemateri" placeholder="masukkan pemateri" value="{{ old('pemateri', $workshop->pemateri) }}"
               class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
           </div>
 <br>
           <div>
             <label for="waktu" class="block text-sm font-medium text-gray-700 mb-1">Waktu</label>
-            <input type="datetime-local" name="waktu" id="waktu"
+            <input type="datetime-local" name="waktu" id="waktu" value="{{ old('waktu', \Carbon\Carbon::parse($workshop->waktu)->format('Y-m-d\TH:i')) }}"
               class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
           </div>
 <br>
           <div>
             <label for="lokasi" class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
-            <input type="text" name="lokasi" id="lokasi" placeholder="masukkan lokasi"
+            <input type="text" name="lokasi" id="lokasi" placeholder="masukkan lokasi" value="{{ old('lokasi', $workshop->lokasi) }}"
               class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
           </div>
-          <div class="col-span-1 md:col-span-2">
-            <label for="detail" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi / Detail Workshop</label>
-            <textarea name="detail" id="detail" rows="4" placeholder="Tuliskan deskripsi lengkap..."
-              class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm"></textarea>
-          </div>
-          
           <div>
-            <label for="harga" class="block text-sm font-medium text-gray-700 mb-1">Harga</label>
-            <input type="number" name="harga" id="harga" placeholder="misalnya 50000"
+            <label for="detail" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi / Detail Workshop</label>
+            <textarea name="detail" id="detail" rows="4"
+              class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">{{ old('detail', $workshop->detail) }}</textarea>
+          </div>
+          <div>
+            <label for="harga" class="block text-sm font-medium text-gray-700 mb-1">Harga Workshop (Rp)</label>
+            <input type="number" name="harga" id="harga" placeholder="Contoh: 50000" value="{{ old('harga', $workshop->harga) }}"
               class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
           </div>
-          
+                    
         </div>
 
         <div class="flex justify-end space-x-4 pt-8 mt-6 border-t pt-6">

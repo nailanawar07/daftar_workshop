@@ -34,6 +34,8 @@
             <th class="py-2 text-left">Pemateri</th>
             <th class="py-2 text-left">Waktu</th>
             <th class="py-2 text-left">Lokasi</th>
+            <th class="py-2 text-left">Detail</th>
+            <th class="py-2 text-left">Harga</th>
             <th class="py-2 text-center">Aksi</th>
           </tr>
         </thead>
@@ -45,10 +47,12 @@
             <td class="py-1 truncate">{{ $workshop->pemateri }}</td>
             <td class="py-1">{{ $workshop->waktu }}</td>
             <td class="py-1 truncate">{{ $workshop->lokasi }}</td>
+            <td class="py-1 truncate">{{ $workshop->detail }}</td>
+            <td class="py-1">Rp{{ number_format($workshop->harga, 0, ',', '.') }}</td>
             <td class="py-1 text-center whitespace-nowrap">
-              <a href="#" class="text-indigo-600 text-xs hover:underline">Edit</a>
+              <a href="{{ route('admin.myworkshop.edit', $workshop->id) }}" class="text-indigo-600 text-xs hover:underline">Edit</a>
               <span class="mx-1 text-gray-300">|</span>
-              <form action="#" method="POST" class="inline">
+              <form action="{{ route('admin.myworkshop.destroy', $workshop->id) }}" method="POST" class="inline">
                 @csrf @method('DELETE')
                 <button type="submit" class="text-red-500 text-xs hover:underline"
                         onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
@@ -68,39 +72,4 @@
 
   </div>
 </main>
-
-
-
-
-
-
-{{-- tabel belum dan lunas
-<td class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-  <span class="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block text-white font-bold uppercase">
-    {{ $workshop->waktu }}
-  </span>
-</td> --}}
-{{-- <div class="p-6 bg-white rounded-lg shadow">
-    <h2 class="text-2xl font-bold mb-4">Daftar Workshop</h2>
-    <table class="min-w-full text-left border">
-        <thead class="bg-gray-100">
-            <tr>
-                <th class="px-4 py-2 border">Judul</th>
-                <th class="px-4 py-2 border">Pemateri</th>
-                <th class="px-4 py-2 border">Waktu</th>
-                <th class="px-4 py-2 border">Lokasi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($workshops as $workshop)
-                <tr>
-                    <td class="px-4 py-2 border">{{ $workshop->judul }}</td>
-                    <td class="px-4 py-2 border">{{ $workshop->pemateri }}</td>
-                    <td class="px-4 py-2 border">{{ \Carbon\Carbon::parse($workshop->waktu)->format('d M Y H:i') }}</td>
-                    <td class="px-4 py-2 border">{{ $workshop->lokasi }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div> --}}
 @endsection

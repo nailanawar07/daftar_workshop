@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel - Argon</title>
+  
+    <!-- Popper -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -48,7 +51,9 @@
   <script src="{{ asset('assets/argon/js/plugins/perfect-scrollbar.min.js') }}" async></script>
 
   <!-- Main script -->
-  <script src="{{ asset('assets/argon/js/argon-dashboard-tailwind.js') }}?v=1.0.1" async></script>
+  <script src="{{ asset('assets/argon/js/argon-dashboard-tailwind.js?v=1.0.1') }}" async></script>
+  
+  
 
 </body>
 </html>

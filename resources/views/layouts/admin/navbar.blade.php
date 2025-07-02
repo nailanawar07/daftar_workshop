@@ -10,7 +10,7 @@
         'admin.myworkshop.index' => 'My Workshop',
         'admin.myworkshop.create' => 'Tambah Workshop',
         'admin.pendaftar' => 'Data Pendaftar',
-        'admin.profil' => 'Profil',
+        'profile.edit' => 'Profil',
         default => 'Halaman',
     };
 @endphp

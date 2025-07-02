@@ -9,16 +9,21 @@ class Pendaftaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'workshop_id', 'status_
-    pembayaran'];
-    
+    protected $fillable = [
+        'user_id',
+        'workshop_id',
+        'status_pembayaran',
+        'bukti_pembayaran',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
     public function workshop()
-    {
-        return $this->belongsTo(Workshop::class);
-    }
+{
+    return $this->belongsTo(Workshop::class);
+}
+
 }

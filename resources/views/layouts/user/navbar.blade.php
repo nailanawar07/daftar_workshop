@@ -6,7 +6,8 @@
   $routeName = Route::currentRouteName();
 
   $pageTitle = match($routeName) {
-      'user.home' => 'Dashboard',
+      'user.home' => 'Beranda',
+      'user.daftar' => 'Daftar Workshop',
       'user.myworkshop' => 'My Workshop',
       'user.profil' => 'Profil',
       default => 'Halaman',

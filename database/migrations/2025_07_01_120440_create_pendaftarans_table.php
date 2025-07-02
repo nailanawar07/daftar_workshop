@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('workshop_id')->constrained()->onDelete('cascade');
-            $table->enum('status_pembayaran', ['belum', 'lunas']);
+            $table->enum('status_pembayaran', ['belum', 'menunggu_verifikasi', 'lunas'])->default('belum');
+            $table->string('bukti_pembayaran')->nullable(); 
             $table->timestamps();
         });
+        
+        
     }
 
     /**

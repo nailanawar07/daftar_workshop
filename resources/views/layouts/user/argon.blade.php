@@ -18,26 +18,36 @@
   <!-- Argon Tailwind CSS -->
   <link href="{{ asset('assets/argon/css/argon-dashboard-tailwind.css') }}" rel="stylesheet" />
 
-  
-    <!-- Main Styling -->
-    <link href="{{ asset('assets/css/argon-dashboard-tailwind.css?v=1.0.1') }}" rel="stylesheet" />
-</head>
-<body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
-        <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
-      
-        {{-- Sidebar tetap di luar main --}}
-        @include('layouts.user.sidebar')
-      
-        {{-- Satu main saja untuk konten dan navbar --}}
-        <main class="relative ml-64 h-full max-h-screen transition-all duration-200 ease-in-out rounded-xl">
+  <!-- Main Styling -->
+  <link href="{{ asset('assets/css/argon-dashboard-tailwind.css?v=1.0.1') }}" rel="stylesheet" />
 
-          @include('layouts.user.navbar')
-      
-          <div class="px-4 md:px-10 mx-auto w-full py-10" style="margin-left: 18rem;">
-            @yield('content')
-          </div>
-        </main>
-      
+  <style>
+    .bg-aesthetic {
+      background: linear-gradient(135deg, #3674B5, #578FCA);
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 300px;
+    }
+    .bawah {
+      background: white;
+    }
+  </style>
+</head>
+<body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bawah text-slate-500">
+  <div class="absolute w-full bg-aesthetic dark:hidden min-h-75"></div>
+
+  <!-- Navbar -->
+  @include('layouts.user.navbar')
+
+  <!-- Sidebar tetap di luar main -->
+  @include('layouts.user.sidebar')
+
+  <!-- Main Content -->
+  <main class="relative ml-64 h-full max-h-screen transition-all duration-200 ease-in-out rounded-xl">
+    <div class="px-4 md:px-10 mx-auto w-full py-10">
+      @yield('content')
+    </div>
+  </main>
 
   <!-- Popper.js -->
   <script src="https://unpkg.com/@popperjs/core@2"></script>
@@ -50,6 +60,5 @@
 
   <!-- Main script -->
   <script src="{{ asset('assets/argon/js/argon-dashboard-tailwind.js') }}?v=1.0.1" async></script>
-
 </body>
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ProfilController;
 use App\Http\Controllers\User\WorkshopController;
+use App\Http\Controllers\User\DaftarController;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfilController;
@@ -41,15 +42,26 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     Route::get('/pendaftar', [AdminPendaftarController::class, 'index'])->name('pendaftar');
     Route::get('/profil', [AdminProfilController::class, 'index'])->name('profil');
+Route::put('/profil', [AdminProfilController::class, 'update'])->name('profil.update');
+
 });
 
 
 
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/home', [UserController::class, 'index'])->name('home');
-    Route::get('/myworkshop', [WorkshopController::class, 'index'])->name('myworkshop');
+    Route::get('/home', [WorkshopController::class, 'index'])->name('home');
+    Route::get('/myworkshop', [WorkshopController::class, 'myWorkshop'])->name('myworkshop');
+
     Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
+    Route::put('/profil', [ProfilController::class, 'update'])->name('profil.update');
+
+    Route::get('/daftar/{id}', [DaftarController::class, 'index'])->name('daftar');
+    Route::post('/daftar/{id}', [DaftarController::class, 'store'])->name('daftar.store');
+
+    Route::get('/myworkshop', [WorkshopController::class, 'myWorkshop'])->name('myworkshop');
+
 });
+
 
 
 require __DIR__.'/auth.php';

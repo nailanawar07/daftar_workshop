@@ -20,9 +20,55 @@ class AdminWorkshopController extends Controller
     }
 
     public function store(Request $request)
-    {
-        Workshop::create($request->all());
-        return redirect()->route('admin.myworkshop.index')->with('success', 'Workshop berhasil ditambahkan!');
+{
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'pemateri' => 'required|string|max:255',
+        'waktu' => 'required|date',
+        'lokasi' => 'required|string|max:255',
+        'detail' => 'required',           
+        'harga' => 'required|integer|min:0' 
+    ]);
+    
 
-    }
+    Workshop::create($request->all());
+
+    return redirect()->route('admin.myworkshop.index')->with('success', 'Workshop berhasil ditambahkan!');
+}
+
+
+    public function edit($id)
+{
+    $workshop = Workshop::findOrFail($id);
+    return view('admin.myworkshop.edit', compact('workshop'));
+}
+
+public function update(Request $request, $id)
+{
+    $workshop = Workshop::findOrFail($id);
+
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'pemateri' => 'required|string|max:255',
+        'waktu' => 'required|date',
+        'lokasi' => 'required|string|max:255',
+        'detail' => 'required',
+        'harga' => 'required|integer|min:0',
+    ]);
+
+    $workshop->update($request->all());
+
+    return redirect()->route('admin.myworkshop.index')->with('success', 'Workshop berhasil diupdate!');
+}
+
+
+public function destroy($id)
+{
+    $workshop = Workshop::findOrFail($id);
+    $workshop->delete();
+
+    return redirect()->route('admin.myworkshop.index')->with('success', 'Workshop berhasil dihapus!');
+}
+
+
 }

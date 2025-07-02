@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('pemateri');
             $table->datetime('waktu');
             $table->string('lokasi');
+            $table->text('detail');
+            $table->integer('harga'); 
             $table->timestamps();
         });
+        
     }
 
     /**

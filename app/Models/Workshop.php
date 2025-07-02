@@ -9,10 +9,18 @@ class Workshop extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['judul', 'pemateri', 'waktu', 'lokasi'];
-    
+    protected $fillable = [
+        'judul',
+        'pemateri',
+        'waktu',
+        'lokasi',
+        'detail',
+        'harga', 
+    ];
+
     public function pendaftarans() 
     {
         return $this->hasMany(Pendaftaran::class);
     }
 }
+
