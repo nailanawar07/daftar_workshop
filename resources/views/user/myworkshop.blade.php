@@ -1,7 +1,7 @@
 @extends('layouts.user.argon')
 
 @section('content')
-<div class="max-w-5xl mx-auto mt-20 px-4" style="margin-left: 500px">
+<div class="max-w-5xl mx-auto mt-20 px-4" style="margin-left: 300px">
     <h2 class="text-xl font-bold mb-4">Workshop Saya</h2>
 
     @forelse ($pendaftarans as $pendaftaran)

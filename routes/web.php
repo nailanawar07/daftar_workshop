@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfilController;
 use App\Http\Controllers\Admin\AdminWorkshopController;
 use App\Http\Controllers\Admin\AdminPendaftarController;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,12 +38,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/myworkshop/{id}', [AdminWorkshopController::class, 'update'])->name('myworkshop.update');
     Route::delete('/myworkshop/{id}', [AdminWorkshopController::class, 'destroy'])->name('myworkshop.destroy');
     
-    
-
-    
     Route::get('/pendaftar', [AdminPendaftarController::class, 'index'])->name('pendaftar');
+    Route::put('/pendaftar/lunas/{id}', [AdminPendaftarController::class, 'setLunas'])->name('pendaftar.lunas');
+
+
     Route::get('/profil', [AdminProfilController::class, 'index'])->name('profil');
 Route::put('/profil', [AdminProfilController::class, 'update'])->name('profil.update');
+Route::put('/pendaftar/lunas/{id}', [AdminPendaftarController::class, 'setLunas'])->name('pendaftar.lunas');
+
 
 });
 
@@ -63,5 +66,10 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 });
 
 
+Route::get('test', function(){
+    $tamgga = 2025-02-23;
+    $date = Carbon::parse($tamgga)->locale('id')->translatedFormat('l, d F Y');
+    echo $date;
+});
 
 require __DIR__.'/auth.php';
