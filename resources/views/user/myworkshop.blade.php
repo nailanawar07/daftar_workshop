@@ -21,9 +21,10 @@
             
             
 
-            @if (!$pendaftaran->bukti_pembayaran)
-                <a href="{{ route('user.daftar', $pendaftaran->workshop->id) }}" class="mt-2 inline-block text-indigo-600 hover:underline">Upload Bukti Pembayaran</a>
-            @endif
+            @if ($pendaftaran->workshop->harga > 0 && !$pendaftaran->bukti_pembayaran)
+            <a href="{{ route('user.daftar', $pendaftaran->workshop->id) }}" class="mt-2 inline-block text-indigo-600 hover:underline">Upload Bukti Pembayaran</a>
+        @endif
+        
         </div>
     @endif
 @empty

@@ -6,7 +6,7 @@
   <title>Admin Panel - Argon</title>
   
     <!-- Popper -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -29,17 +29,25 @@
         <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
       
         {{-- Sidebar tetap di luar main --}}
-        @include('layouts.admin.sidebar')
+        @include('components.sidebar_admin')
       
         {{-- Satu main saja untuk konten dan navbar --}}
         <main class="relative ml-64 bg-blueGray-50 min-h-screen">
-          @include('layouts.admin.navbar')
+          @include('components.navbar_admin')
       
           <div class="px-4 md:px-10 mx-auto w-full py-10">
             @yield('content')
           </div>
+        
+          {{-- Tambahkan ini --}}
+          @yield('modals')
         </main>
-      
+     
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
+
+        <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 
   <!-- Popper.js -->
   <script src="https://unpkg.com/@popperjs/core@2"></script>
@@ -52,7 +60,7 @@
 
   <!-- Main script -->
   <script src="{{ asset('assets/argon/js/argon-dashboard-tailwind.js?v=1.0.1') }}" async></script>
-  
+
   
 
 </body>

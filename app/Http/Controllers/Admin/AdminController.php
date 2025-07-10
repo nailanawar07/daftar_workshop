@@ -9,10 +9,10 @@ use App\Notifications\PembayaranLunas;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('admin.dashboard');
-    }
+    // public function index()
+    // {
+    //     return view('admin.dashboard');
+    // }
     public function konfirmasiLunas($id)
 {
     $pendaftaran = Pendaftaran::findOrFail($id);

@@ -7,6 +7,7 @@ use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class DaftarController extends Controller
@@ -19,12 +20,35 @@ class DaftarController extends Controller
 public function store(Request $request, $id)
 {
     $user = Auth::user();
+    $workshop = Workshop::findOrFail($id);
 
-    // Cek apakah user sudah daftar workshop ini
     $pendaftaran = Pendaftaran::where('user_id', $user->id)
                     ->where('workshop_id', $id)
                     ->first();
 
+    // 🟢 Kalau gratis, langsung daftar status 'lunas' tanpa bukti
+    if ($workshop->harga == 0) {
+        if ($pendaftaran) {
+            $pendaftaran->update([
+                'status_pembayaran' => 'lunas',
+                'bukti_pembayaran' => null,
+            ]);
+        } else {
+            $pendaftaran = Pendaftaran::create([
+                'user_id' => $user->id,
+                'workshop_id' => $id,
+                'status_pembayaran' => 'lunas',
+                'bukti_pembayaran' => null,
+            ]);
+        }
+
+        // Kirim email
+        Mail::to($user->email)->send(new \App\Mail\PembayaranLunasMail($pendaftaran));
+
+        return redirect()->route('user.myworkshop')->with('success', 'Berhasil mendaftar. Status langsung lunas.');
+    }
+
+    // 🔴 Kalau berbayar, wajib upload bukti
     $filename = null;
     $status = 'belum';
 
@@ -41,13 +65,11 @@ public function store(Request $request, $id)
     }
 
     if ($pendaftaran) {
-        // ✅ Update kalau sudah pernah daftar
         $pendaftaran->update([
             'bukti_pembayaran' => $filename ?? $pendaftaran->bukti_pembayaran,
             'status_pembayaran' => $status,
         ]);
     } else {
-        // 🆕 Buat baru kalau belum pernah daftar
         Pendaftaran::create([
             'user_id' => $user->id,
             'workshop_id' => $id,
@@ -56,8 +78,9 @@ public function store(Request $request, $id)
         ]);
     }
 
-    return redirect()->route('user.myworkshop')->with('success', 'Pendaftaran berhasil!');
+    return redirect()->route('user.myworkshop')->with('success', 'Pendaftaran berhasil! Bukti pembayaran menunggu verifikasi.');
 }
+
 
 
 }

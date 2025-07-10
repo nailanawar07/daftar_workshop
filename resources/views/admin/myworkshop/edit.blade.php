@@ -28,20 +28,29 @@
 <br>
           <div>
             <label for="waktu" class="block text-sm font-medium text-gray-700 mb-1">Waktu</label>
-            <input type="datetime-local" name="waktu" id="waktu" value="{{ old('waktu', \Carbon\Carbon::parse($workshop->waktu)->format('Y-m-d\TH:i')) }}"
-              class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
+            @php
+    $now = now();
+    $minDate = $now->format('Y-m-d\TH:i');
+    $maxDate = $now->copy()->addMonths(3)->format('Y-m-d\TH:i');
+    $valueDate = old('waktu', \Carbon\Carbon::parse($workshop->waktu)->format('Y-m-d\TH:i'));
+@endphp
+
+<input type="datetime-local" name="waktu" id="waktu"
+  min="{{ $minDate }}" max="{{ $maxDate }}" value="{{ $valueDate }}"
+  class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
+
           </div>
 <br>
           <div>
             <label for="lokasi" class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
             <input type="text" name="lokasi" id="lokasi" placeholder="masukkan lokasi" value="{{ old('lokasi', $workshop->lokasi) }}"
               class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">
-          </div>
+          </div><br>
           <div>
             <label for="detail" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi / Detail Workshop</label>
             <textarea name="detail" id="detail" rows="4"
               class="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100 text-sm">{{ old('detail', $workshop->detail) }}</textarea>
-          </div>
+          </div><br>
           <div>
             <label for="harga" class="block text-sm font-medium text-gray-700 mb-1">Harga Workshop (Rp)</label>
             <input type="number" name="harga" id="harga" placeholder="Contoh: 50000" value="{{ old('harga', $workshop->harga) }}"

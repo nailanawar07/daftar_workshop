@@ -47,15 +47,25 @@
             
             <form action="{{ route('user.daftar.store', $workshop->id) }}" method="POST" enctype="multipart/form-data" class="mt-6">
               @csrf
-              <label class="block text-indigo-50 mb-2 text-sm font-medium">Upload Bukti Pembayaran</label>
-              <input type="file" name="bukti_pembayaran" accept="image/*"
-                  class="block w-full text-sm text-white bg-indigo-500 border border-white rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white file:text-indigo-600 hover:file:bg-gray-100" >
-          
+            
+              {{-- Cek apakah workshop berbayar --}}
+              @if ($workshop->harga > 0)
+                  <label class="block text-indigo-50 mb-2 text-sm font-medium">Upload Bukti Pembayaran</label>
+                  <input type="file" name="bukti_pembayaran" accept="image/*"
+                      class="block w-full text-sm text-white bg-indigo-500 border border-white rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white file:text-indigo-600 hover:file:bg-gray-100">
+              @else
+                  <div class="bg-green-100 text-green-800 text-sm rounded px-4 py-3 mb-4" role="alert">
+                    Workshop ini <strong>gratis</strong>. Klik tombol di bawah untuk langsung mendaftar.
+                  </div>
+              @endif
+            
               <button type="submit"
                   class="mt-5 bg-gradient-to-r from-indigo-200 to-indigo-300 text-indigo-800 font-bold py-2 px-4 rounded hover:opacity-90 transition w-full">
-                  Kirim Pendaftaran
+                  {{ $workshop->harga > 0 ? 'Kirim Pendaftaran' : 'Daftar Sekarang (Gratis)' }}
               </button>
-          </form>
+            </form>
+            
+            
           
           </div>
         </div>

@@ -37,10 +37,10 @@
   <div class="absolute w-full bg-aesthetic dark:hidden min-h-75"></div>
 
   <!-- Navbar -->
-  @include('layouts.user.navbar')
+  @include('components.navbar_user')
 
   <!-- Sidebar tetap di luar main -->
-  @include('layouts.user.sidebar')
+  @include('components.sidebar_user')
 
   <!-- Main Content -->
   <main class="relative ml-64 h-full max-h-screen transition-all duration-200 ease-in-out rounded-xl">
@@ -51,6 +51,8 @@
 
   <!-- Popper.js -->
   <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
 
   <!-- Plugin for charts -->
   <script src="{{ asset('assets/argon/js/plugins/chartjs.min.js') }}" async></script>

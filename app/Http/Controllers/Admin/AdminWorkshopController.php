@@ -9,10 +9,11 @@ use App\Models\Workshop;
 class AdminWorkshopController extends Controller
 {
     public function index()
-    {
-        $workshops = Workshop::latest()->paginate(10);
-        return view('admin.myworkshop.index', compact('workshops'));
-    }
+{
+    $workshops = Workshop::with('pendaftarans')->latest()->paginate(10);
+    return view('admin.myworkshop.index', compact('workshops'));
+}
+
 
     public function create()
     {
