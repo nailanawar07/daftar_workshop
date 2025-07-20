@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Panel - Argon</title>
+  <title>@yield('title', 'Dashboard User')</title>
+  <link rel="icon" type="image/png" href="{{ asset('assets/argon/img/logo_uas.png') }}">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -22,37 +23,39 @@
   <link href="{{ asset('assets/css/argon-dashboard-tailwind.css?v=1.0.1') }}" rel="stylesheet" />
 
   <style>
-    .bg-aesthetic {
+    .fixed-bg-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 325px;
       background: linear-gradient(135deg, #3674B5, #578FCA);
-      background-repeat: no-repeat;
-      background-size: cover;
-      min-height: 300px;
+      z-index: 0;
     }
-    .bawah {
-      background: white;
+    .jarak{
+      margin-top: 70px;
     }
   </style>
 </head>
-<body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bawah text-slate-500">
-  <div class="absolute w-full bg-aesthetic dark:hidden min-h-75"></div>
+<body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default text-slate-500 bg-white">
+
+  <!-- Background Biru di Atas -->
+  <div class="fixed-bg-top"></div>
 
   <!-- Navbar -->
   @include('components.navbar_user')
 
-  <!-- Sidebar tetap di luar main -->
+  <!-- Sidebar -->
   @include('components.sidebar_user')
 
   <!-- Main Content -->
-  <main class="relative ml-64 h-full max-h-screen transition-all duration-200 ease-in-out rounded-xl">
-    <div class="px-4 md:px-10 mx-auto w-full py-10">
-      @yield('content')
-    </div>
+  <main class="relative z-10 ml-64 pt-[320px] px-4 md:px-10 transition-all duration-200 ease-in-out jarak">
+    @yield('content')
   </main>
 
   <!-- Popper.js -->
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-
 
   <!-- Plugin for charts -->
   <script src="{{ asset('assets/argon/js/plugins/chartjs.min.js') }}" async></script>

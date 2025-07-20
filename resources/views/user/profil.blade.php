@@ -1,4 +1,5 @@
 @extends('layouts.user.argon')
+@section('title', 'Profil')
 
 @section('content')
 <main class="relative h-full transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">

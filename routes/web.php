@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\AdminWorkshopController;
 use App\Http\Controllers\Admin\AdminPendaftarController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Route::get('/dashboard', function () {
@@ -39,27 +39,25 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/myworkshop/{id}/edit', [AdminWorkshopController::class, 'edit'])->name('myworkshop.edit');
     Route::put('/myworkshop/{id}', [AdminWorkshopController::class, 'update'])->name('myworkshop.update');
     Route::delete('/myworkshop/{id}', [AdminWorkshopController::class, 'destroy'])->name('myworkshop.destroy');
-    
+
     Route::get('/pendaftar', [AdminPendaftarController::class, 'index'])->name('pendaftar');
     Route::put('/pendaftar/lunas/{id}', [AdminPendaftarController::class, 'setLunas'])->name('pendaftar.lunas');
 
 
     Route::get('/profil', [AdminProfilController::class, 'index'])->name('profil');
-Route::put('/profil', [AdminProfilController::class, 'update'])->name('profil.update');
+    Route::put('/profil', [AdminProfilController::class, 'update'])->name('profil.update');
 
-Route::get('/test-email', function () {
-    $pendaftaran = Pendaftaran::with(['user', 'workshop'])->latest()->first();
+    Route::get('/test-email', function () {
+        $pendaftaran = Pendaftaran::with(['user', 'workshop'])->latest()->first();
 
-    if (!$pendaftaran) {
-        return 'Tidak ada data pendaftaran.';
-    }
+        if (!$pendaftaran) {
+            return 'Tidak ada data pendaftaran.';
+        }
 
-    Mail::to($pendaftaran->user->email)->send(new PembayaranLunasMail($pendaftaran));
+        Mail::to($pendaftaran->user->email)->send(new PembayaranLunasMail($pendaftaran));
 
-    return 'Email berhasil dikirim ke Mailtrap!';
-});
-
-
+        return 'Email berhasil dikirim ke Mailtrap!';
+    });
 });
 
 
@@ -75,16 +73,15 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::post('/daftar/{id}', [DaftarController::class, 'store'])->name('daftar.store');
 
     Route::get('/myworkshop', [WorkshopController::class, 'myWorkshop'])->name('myworkshop');
-
 });
 
 
-Route::get('test', function(){
-    $tamgga = 2025-02-23;
+Route::get('test', function () {
+    $tamgga = 2025 - 02 - 23;
     $date = Carbon::parse($tamgga)->locale('id')->translatedFormat('l, d F Y');
     echo $date;
 });
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -1,83 +1,119 @@
 @extends('layouts.user.argon')
+@section('title', 'Beranda')
 
 @section('content')
 <style>
   .card {
-    width: 190px;
-    height: 254px;
-    border-radius: 20px;
-    background: #f5f5f5;
-    position: relative;
-    padding: 1.8rem;
-    border: 2px solid #c3c6ce;
-    transition: 0.5s ease-out;
-    overflow: visible;
-    margin-bottom: 30px;
-    margin-left: 2px;
-    margin-right: 2px;
-  }
+  width: 190px;
+  height: 254px;
+  border-radius: 20px;
+  background: #f5f5f5;
+  position: relative;
+  padding: 1.8rem;
+  border: 2px solid #c3c6ce;
+  transition: 0.5s ease-out;
+  overflow: visible;
+  margin-bottom: 30px;
+  margin-left: 2px;
+  margin-right: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .card-details {
-    color: black;
-    height: 100%;
-    gap: .5em;
-    display: grid;
-    place-content: center;
-  }
+.card-details {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.3rem;
+  height: 100%;
+  text-align: left;
+}
 
-  .card-button {
-    transform: translate(-50%, 125%);
-    width: 70%;
-    border-radius: 1rem;
-    border: none;
-    background-color: #008bf8;
-    color: #fff;
-    font-size: 1rem;
-    padding: .5rem 1rem;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    opacity: 0;
-    transition: 0.3s ease-out;
-  }
+.card-button {
+  transform: translate(-50%, 125%);
+  width: 70%;
+  border-radius: 1rem;
+  border: none;
+  background-color: #008bf8;
+  color: #fff;
+  font-size: 1rem;
+  padding: .5rem 1rem;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  opacity: 0;
+  transition: 0.3s ease-out;
+}
 
   .text-body {
-    color: rgb(134, 134, 134);
-    margin-bottom: -5px;
-  }
+  color: rgb(90, 90, 90);
+  font-size: 0.85rem;
+  line-height: 0.5rem;
+}
 
   .text-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    text-align: center;
-  }
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 6px;
+  white-space: normal;
+}
 
-  .card:hover {
-    border-color: #008bf8;
-    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
-  }
+.card:hover {
+  border-color: #008bf8;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+}
 
-  .card:hover .card-button {
-    transform: translate(-50%, 50%);
-    opacity: 1;
-  }
+
+.card:hover .card-button {
+  transform: translate(-50%, 50%);
+  opacity: 1;
+}
 
   .kecil {
-    font-size: 10px;
-  }
-  .modall{
-    background: #819A91;
-  }
-  .belakang{
+  font-size: 0.75rem;
+  color: #666;
+}
+.modall {
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+}
+
+.modall .p-6 {
+  padding: 2rem;
+}
+
+.modall h3 {
+  color: #1f2937; /* dark gray */
+}
+
+.modall p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.modall span {
+  font-weight: 500;
+  color: #4f46e5; /* indigo-600 */
+}
+
+.belakang {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px) saturate(150%);
     width: 100vw;
     height: 100vh;
-    position: fixed; /* penting */
-  top: 0;
-  left: 0;
-  z-index: 40;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 40;
   }
+
 </style>
 
 <main class="relative h-full transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
@@ -86,19 +122,29 @@
       @foreach ($workshops as $workshop)
       <div class="card">
         <div class="card-details">
-          <p class="text-title">{{ $workshop->judul }}</p>
+          <p class="text-title">{{ $workshop->judul }}</p><br>
           <p class="text-body">{{ $workshop->pemateri }}</p>
-          <p class="text-body kecil">🗓️ {{ $workshop->waktu }}</p>
-          <p class="text-body text-sm">📍 {{ $workshop->lokasi }}</p>
+          <p class="text-body kecil flex items-center gap-1">
+            🗓️ <span>{{ $workshop->waktu }}</span>
+          </p>
+          <p class="text-body kecil flex items-center gap-1">
+            📍 <span>{{ $workshop->lokasi }}</span>
+          </p>
         </div>
+      
         <!-- Tombol trigger modal -->
-        <button type="button" data-modal-target="modal-{{ $workshop->id }}" data-modal-toggle="modal-{{ $workshop->id }}" class="card-button">Selengkapnya</button>
-
+        <button type="button"
+                data-modal-target="modal-{{ $workshop->id }}"
+                data-modal-toggle="modal-{{ $workshop->id }}"
+                class="card-button">
+          Selengkapnya
+        </button>
       </div>
+      
     
       <!-- Modal ditempatkan setelah kartu -->
       <div id="modal-{{ $workshop->id }}" tabindex="-1" aria-hidden="true"
-        class="hidden fixed inset-0 z-50 flex items-center justify-center belakang">
+        class="hidden fixed inset-0 z-[9999] flex items-center justify-center belakang">
    
         <div class="relative modall backdrop-blur-md border border-gray-200 rounded-2xl shadow-xl w-full max-w-md transition-all" style="width: 500px">
           
@@ -114,12 +160,16 @@
       
           <!-- Body -->
           <div class="p-6 space-y-3 text-gray-700 text-[15px]">
-            <p><span class="font-medium text-blue-700">{{ $workshop->detail }}</p>
+            <p>Pemateri :<span class="font-medium text-blue-700">{{ $workshop->pemateri }}</p>
+              <p>Waktu :<span class="font-medium text-blue-700">{{ $workshop->waktu }}</p>
+                <p>Lokasi :<span class="font-medium text-blue-700">{{ $workshop->lokasi }}</p>
+            <p>Detail :<span class="font-medium text-blue-700">{{ $workshop->detail }}</p>
+              <p>Harga :<span class="font-medium text-blue-700">{{ $workshop->harga }}</p>
           </div>
       
           <!-- Footer -->
           <div class="flex justify-end p-6 border-t border-gray-200 rounded-b-2xl">
-            <a href="{{ route('user.daftar', ['id' => $workshop->id]) }}" class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5 py-2 rounded-full shadow hover:opacity-90 transition" data-modal-hide="modal-{{ $workshop->id }}">Daftar</a>
+            <a href="{{ route('user.daftar', ['id' => $workshop->id]) }}" class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5 py-2 rounded-full shadow hover:opacity-90 transition daftar" data-modal-hide="modal-{{ $workshop->id }}" style="color: #1f2937">Daftar</a>
             
           </div>
       

@@ -14,8 +14,22 @@
     z-index: 999;
   }
   .modall {
-    background: #819A91;
-  }
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+}
+
+.modall .p-6 {
+  padding: 2rem;
+}
+
+.modall h3 {
+  color: #1f2937; /* dark gray */
+}
+
   .belakang {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px) saturate(150%);
@@ -48,18 +62,18 @@
             <th class="py-2 text-center">Aksi</th>
           </tr>
         </thead>
-        <tbody class="text-gray-800">
+        <tbody class="text-gray-800" >
           @foreach ($pendaftarans as $i => $p)
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-2">{{ ($pendaftarans->currentPage() - 1) * $pendaftarans->perPage() + $loop->iteration }}</td>
-            <td class="py-2">{{ $p->user->name }}</td>
-            <td class="py-2">{{ $p->workshop->judul }}</td>
-            <td class="py-2">{{ \Carbon\Carbon::parse($p->workshop->waktu)->format('d M Y H:i') }}</td>
-            <td class="py-2">
+          <tr class="border-b hover:bg-gray-50" >
+            <td class="py-1">{{ ($pendaftarans->currentPage() - 1) * $pendaftarans->perPage() + $loop->iteration }}</td>
+            <td class="py-1">{{ $p->user->name }}</td>
+            <td class="py-1">{{ $p->workshop->judul }}</td>
+            <td class="py-1">{{ \Carbon\Carbon::parse($p->workshop->waktu)->format('d M Y H:i') }}</td>
+            <td class="py-1">
               @if (!$p->bukti_pembayaran)
-                <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">Belum bayar</span>
+                <span class="px-1 py-1 text-xs rounded bg-red-100 text-red-700">Belum bayar</span>
               @else
-                <span class="px-2 py-1 text-xs rounded
+                <span class="px-1 py-1 text-xs rounded
                   @if($p->status_pembayaran == 'lunas') bg-green-100 text-green-700
                   @elseif($p->status_pembayaran == 'menunggu_verifikasi') bg-yellow-100 text-yellow-700
                   @else bg-red-100 text-red-700 @endif">
@@ -67,8 +81,8 @@
                 </span>
               @endif
             </td>
-            <td class="py-2 text-center relative">
-                @if ($p->bukti_pembayaran)
+            <td class="py-1 text-center relative">
+              @if ($p->bukti_pembayaran)
                 <div x-data="{ open: false }" class="relative inline-block text-left">
                   <button @click="open = !open" class="text-gray-600 hover:text-gray-900 focus:outline-none">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -77,28 +91,37 @@
                   </button>
                   <div x-show="open" @click.away="open = false" class="dropdown-box">
                     <div class="py-1 text-sm text-left text-gray-700">
-                      <button type="button" data-modal-target="modal-{{ $p->id }}" data-modal-toggle="modal-{{ $p->id }}" class="block px-2 py-1 hover:bg-gray-100 w-full text-left">Detail</button>
-                      
+                      <button type="button"
+                              data-modal-target="modal-{{ $p->id }}"
+                              data-modal-toggle="modal-{{ $p->id }}"
+                              @click="open = false"
+                              class="block px-2 py-1 hover:bg-gray-100 w-full text-left">
+                        Detail
+                      </button>
+            
                       @if ($p->status_pembayaran != 'lunas')
                       <form action="{{ route('admin.pendaftar.lunas', $p->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <button type="submit" class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-green-600">Tandai Lunas</button>
+                        <button type="submit" class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-green-600">
+                          Tandai Lunas
+                        </button>
                       </form>
                       @endif
                     </div>
                   </div>
                 </div>
-                @else
-                  <span class="text-gray-400 italic">-</span>
-                @endif
-              </td>
+              @else
+                <span class="text-gray-400 italic">-</span>
+              @endif
+            </td>
+            
               
           </tr>
           @endforeach
         </tbody>
       </table>
-    </div>
+    </div><br>
 
     <div class="mt-3 text-xs text-gray-600">
       {{ $pendaftarans->links() }}
@@ -112,38 +135,30 @@
 @if ($p->bukti_pembayaran)
 <div id="modal-{{ $p->id }}" tabindex="-1" aria-hidden="true"
      class="hidden fixed inset-0 z-[9999] flex items-center justify-center belakang">
-  <div class="relative modall border border-gray-200 rounded-2xl shadow-xl w-full max-w-md transition-all" style="width: 500px">
+     
+   <div class="relative modall border border-gray-200 rounded-2xl shadow-xl w-full max-w-md transition-all" style="width: 500px">
+ 
+     <div class="flex justify-between items-center p-6 border-b border-gray-200 rounded-t-2xl">
+       <h3 class="text-2xl font-semibold text-gray-800">Bukti Pembayaran</h3>
+       <button type="button" data-modal-hide="modal-{{ $p->id }}" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 rounded-full p-2 transition">
+         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+         </svg>
+       </button>
+     </div>
+ 
+     <div class="p-6 space-y-3 text-gray-700 text-[15px]">
+      <center>
+       <p><strong><img src="{{ asset('storage/bukti_pembayaran/' . $p->bukti_pembayaran) }}" alt="Bukti" style="width: 200px; height: 300px;" class="object-contain rounded shadow"></strong></p>
+      </center>
+ 
+     </div>
+ 
+     
+   </div>
 
-    <div class="flex justify-between items-center p-6 border-b border-gray-200 rounded-t-2xl">
-      <h3 class="text-2xl font-semibold text-gray-800">Bukti Pembayaran</h3>
-      <button type="button" data-modal-hide="modal-{{ $p->id }}" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 rounded-full p-2 transition">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-        </svg>
-      </button>
-    </div>
 
-    <div class="p-5 space-y-3 text-gray-700 text-[15px]">
-      <p><strong>Nama:</strong> {{ $p->user->name }}</p>
-      <p><strong>Workshop:</strong> {{ $p->workshop->judul }}</p>
-      <p><strong>Waktu:</strong> {{ \Carbon\Carbon::parse($p->workshop->waktu)->format('d M Y H:i') }}</p>
-      <p><strong>Bukti:</strong><br>
-        <a href="{{ asset('storage/bukti_pembayaran/' . $p->bukti_pembayaran) }}" target="_blank" class="text-blue-600 underline">Lihat File</a>
-      </p>
-
-      @if ($p->status_pembayaran != 'lunas')
-      <form action="{{ route('admin.pendaftar.lunas', $p->id) }}" method="POST" class="pt-3">
-          @csrf
-          @method('PUT')
-          <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-              Tandai Lunas
-          </button>
-      </form>
-      @endif
-      
-    </div>
-
-  </div>
+ 
 </div>
 @endif
 @endforeach

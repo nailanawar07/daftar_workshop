@@ -12,7 +12,7 @@
       <ul class="flex flex-col pl-0 mb-0">
 
         <li class="mt-0.5 w-full">
-            <a class="{{ request()->routeIs('admin.myworkshop.index') || request()->routeIs('admin.myworkshop.create')
+            <a class="{{ request()->routeIs('admin.myworkshop.index') || request()->routeIs('admin.myworkshop.create') || request()->routeIs('admin.myworkshop.edit')
               ? 'bg-blue-500 text-white' : 'dark:text-white dark:opacity-80 text-slate-700' }} py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors"
                 href="{{ route('admin.myworkshop.index') }}">
              

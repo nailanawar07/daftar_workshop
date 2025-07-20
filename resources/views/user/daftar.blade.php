@@ -1,4 +1,5 @@
 @extends('layouts.user.argon')
+@section('title', 'Daftar')
 
 @section('content')
 <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
@@ -15,7 +16,7 @@
 }
 </script>
 
-<section class="flex-1 px-4">
+<section class="flex-1 px-4" style="margin-top: -320px">
   <div class="container mx-auto">
     <div class="bg-indigo-600 shadow-lg rounded-lg" style="width: 970px">
       <div class="px-6 py-5">

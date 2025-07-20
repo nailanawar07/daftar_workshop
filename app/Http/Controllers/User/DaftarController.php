@@ -58,6 +58,8 @@ class DaftarController extends Controller
             $file = $request->file('bukti_pembayaran');
             $filename = time() . '_' . $file->getClientOriginalName();
             
+            //  
+
             $destinationPath = storage_path('app/public/bukti_pembayaran');
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);

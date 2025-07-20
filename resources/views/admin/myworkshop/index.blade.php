@@ -13,22 +13,22 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 40;
+    z-index: 9999;
   }
   .dropdown-box {
-  position: absolute;
-  top: -200%; /* muncul di bawah tombol */
-  left: -95px; /* menjorok ke kiri */
-  margin-top: 4px;
-  min-width: 80px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-}
-
-
-
+    position: absolute;
+    top: -200%;
+    left: -95px;
+    margin-top: 4px;
+    min-width: 80px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 40; /* lebih kecil dari modal */
+  }
+  [x-cloak] {
+    display: none !important;
+  }
 </style>
 
 <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
@@ -75,13 +75,18 @@
                     <path d="M6 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
                   </svg>
                 </button>
-                <div x-show="open" @click.away="open = false"
-     class="dropdown-box"
->
 
-
+                <!-- DROPDOWN -->
+                <div x-cloak x-show="open" @click.away="open = false" x-transition class="dropdown-box">
                   <div class="py-1 text-sm text-left text-gray-700">
-                    <button type="button" data-modal-target="modal-{{ $workshop->id }}" data-modal-toggle="modal-{{ $workshop->id }}" class="block px-1 py-1 hover:bg-gray-100">Detail</button>
+                    <button
+                      type="button"
+                      data-modal-target="modal-{{ $workshop->id }}"
+                      data-modal-toggle="modal-{{ $workshop->id }}"
+                      @click="open = false"
+                      class="block px-1 py-1 hover:bg-gray-100">
+                      Detail
+                    </button>
                     <a href="{{ route('admin.myworkshop.edit', $workshop->id) }}" class="block px-1 py-1 hover:bg-gray-100">Edit</a>
                     <form action="{{ route('admin.myworkshop.destroy', $workshop->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
                       @csrf @method('DELETE')
@@ -110,7 +115,6 @@
 <div id="modal-{{ $workshop->id }}" tabindex="-1" aria-hidden="true"
      class="hidden fixed inset-0 z-[9999] flex items-center justify-center belakang">
   <div class="relative modall border border-gray-200 rounded-2xl shadow-xl w-full max-w-md transition-all" style="width: 500px">
-
     <div class="flex justify-between items-center p-6 border-b border-gray-200 rounded-t-2xl">
       <h3 class="text-2xl font-semibold text-gray-800">{{ $workshop->judul }}</h3>
       <button type="button" data-modal-hide="modal-{{ $workshop->id }}" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 rounded-full p-2 transition">
@@ -127,10 +131,7 @@
       <p><strong>Harga:</strong> Rp{{ number_format($workshop->harga, 0, ',', '.') }}</p>
       <p><strong>Detail:</strong><br><span class="font-medium text-blue-700">{{ $workshop->detail }}</span></p>
       <p><strong>Jumlah Pendaftar:</strong> {{ $workshop->pendaftarans->count() }} orang</p>
-
     </div>
-
-    
   </div>
 </div>
 @endforeach
