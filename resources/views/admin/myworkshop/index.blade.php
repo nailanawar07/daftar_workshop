@@ -3,8 +3,20 @@
 @section('content')
 <style>
   .modall {
-    background: #819A91;
-  }
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+}
+.modall .p-6 {
+  padding: 2rem;
+}
+
+.modall h3 {
+  color: #1f2937; /* dark gray */
+}
   .belakang {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px) saturate(150%);

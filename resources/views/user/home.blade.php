@@ -144,7 +144,7 @@
     
       <!-- Modal ditempatkan setelah kartu -->
       <div id="modal-{{ $workshop->id }}" tabindex="-1" aria-hidden="true"
-        class="hidden fixed inset-0 z-[9999] flex items-center justify-center belakang">
+        class="hidden fixed inset-0 z-50 flex items-center justify-center belakang">
    
         <div class="relative modall backdrop-blur-md border border-gray-200 rounded-2xl shadow-xl w-full max-w-md transition-all" style="width: 500px">
           

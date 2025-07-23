@@ -1,4 +1,4 @@
-<nav class="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl bg-transparent lg:flex-nowrap lg:justify-start" navbar-main navbar-scroll="false">
+<nav class="fixed top-0 left-0 right-0 flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl bg-transparent lg:flex-nowrap lg:justify-start" navbar-main navbar-scroll="false">
   <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
     <nav>
       @php
